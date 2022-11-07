@@ -1,2 +1,2 @@
 # AoC2022
-Rusty AoC. Let's crab!
+Will fail again this year, but safely in Rust. Let's crab!
