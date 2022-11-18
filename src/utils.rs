@@ -1,7 +1,7 @@
 use std::{
     env,
     fs::{self, File},
-    io,
+    io::{self, Write},
     path::Path,
 };
 
@@ -27,6 +27,21 @@ pub fn download_file(day_id: &str) -> Result<String, ureq::Error> {
     Ok(body)
 }
 
+pub fn write_file(path_string: &String, content: String) -> Result<(), io::Error> {
+    let path = Path::new(path_string);
+    let display = path.display();
+    let mut file = match File::create(&path) {
+        Err(err) => panic!("Could not create {display}: {err}"),
+        Ok(file) => file,
+    };
+
+    match file.write_all(content.as_bytes()) {
+        Err(err) => panic!("Could not create {display}: {err}"),
+        _ => println!("{display}, is written!"),
+    }
+    Ok(())
+}
+
 pub fn check_for_file(day_id: &str) {
     let binding = format!("{}{}{}", "files/day", day_id, ".txt").to_string();
     let path = Path::new(&binding);
@@ -35,8 +50,10 @@ pub fn check_for_file(day_id: &str) {
         true => println!("file is here"),
         false => {
             if let Ok(body) = download_file(day_id) {
-                println!("body is: {body}")
-                // TODO write a file and write that download is finished
+                // println!("body is: {body}")
+                if let Ok(()) = write_file(&binding, body) {
+                    println!("Downloaded and written, run me again!")
+                }
             } else {
                 panic!()
             }
