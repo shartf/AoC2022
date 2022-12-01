@@ -20,6 +20,14 @@ pub fn day_1() -> anyhow::Result<()> {
         }
     }
     result.sort_by(|a, b| a.partial_cmp(b).unwrap());
-    dbg!(result);
+    // dbg!(result);
+    // get last 3 elements for results
+    let last_3: u32 = result.as_slice()[result.len() - 3..]
+        .to_vec()
+        .into_iter()
+        .sum();
+    // dbg!(last_3);
+    println!("sum is {last_3}");
+
     Ok(())
 }
