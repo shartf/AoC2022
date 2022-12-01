@@ -16,7 +16,7 @@ pub fn read_api_key() -> io::Result<String> {
 }
 
 pub fn download_file(day_id: &str) -> Result<String, ureq::Error> {
-    let prefix: &str = "https://adventofcode.com/2016/day/";
+    let prefix: &str = "https://adventofcode.com/2022/day/";
     let postfix: &str = "/input";
     let binding = format!("{prefix}{day_id}{postfix}",).to_string();
     let body: String = ureq::get(&binding)
