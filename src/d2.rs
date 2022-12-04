@@ -13,13 +13,13 @@ pub fn day_2() -> anyhow::Result<()> {
         })
         .collect::<String>();
     let parsed: Vec<String> = input.lines().map(|x| x.to_string()).collect();
-    let total_score = calculate_score(parsed);
+    let total_score = calculate_score_part2(parsed);
     println!("You total score is {total_score}");
 
     Ok(())
 }
 
-fn calculate_score(scores: Vec<String>) -> i32 {
+/* fn calculate_score(scores: Vec<String>) -> i32 {
     let mut acc: i32 = 0;
     for x in scores {
         //quick and dirty!
@@ -37,6 +37,30 @@ fn calculate_score(scores: Vec<String>) -> i32 {
             (3, 1) => acc += 6 + you, // you won R>S
             (3, 2) => acc += you,
             (3, 3) => acc += 3 + you, // draw
+            _ => acc += 0,
+        }
+    }
+    acc
+} */
+
+fn calculate_score_part2(scores: Vec<String>) -> i32 {
+    let mut acc: i32 = 0;
+    for x in scores {
+        //quick and dirty!
+        let v: Vec<&str> = x.split(' ').collect();
+        let elf: i32 = v[0].parse().unwrap();
+        let you: i32 = v[1].parse().unwrap();
+        // match spaghetti
+        match (elf, you) {
+            (1, 1) => acc += 3, // you lose
+            (1, 2) => acc += 4, // you draw
+            (1, 3) => acc += 8, // you win
+            (2, 1) => acc += 1, // you lose
+            (2, 2) => acc += 5, // you draw
+            (2, 3) => acc += 9, // you win
+            (3, 1) => acc += 2, // you lose
+            (3, 2) => acc += 6, // you draw
+            (3, 3) => acc += 7, // you win
             _ => acc += 0,
         }
     }
