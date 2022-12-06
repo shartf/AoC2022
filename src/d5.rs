@@ -76,7 +76,7 @@ pub fn day_5() -> anyhow::Result<()> {
     let mut crates = vec![one, two, three, four, five, six, seven, eight, nine];
     let input = std::fs::read_to_string("files/day5.txt").unwrap();
     let parsed = input.lines().skip(10).collect_vec();
-    let res_one = first_part(crates.to_vec(), parsed);
+    let res_one = second_part(crates.to_vec(), parsed);
 
     Ok(())
 }
@@ -95,6 +95,23 @@ fn first_part(mut crates: Vec<Vec<String>>, parsed: Vec<&str>) -> String {
             times -= 1;
         }
     }
+    dbg!(crates);
+    String::from("42")
+}
+
+fn second_part(mut crates: Vec<Vec<String>>, parsed: Vec<&str>) -> String {
+    for line in parsed {
+        let line_split = line.split(' ').collect_vec();
+        let times: usize = line_split[1].parse().unwrap();
+        let from: usize = line_split[3].parse::<usize>().unwrap() - 1; // adjust for tuple indexing
+        let to: usize = line_split[5].parse::<usize>().unwrap() - 1;
+
+        let mut crane: Vec<_>;
+        let idx = crates[from].len() - (times);
+        crane = crates[from].drain(idx..).collect();
+        crates[to].append(&mut crane);
+    }
+
     dbg!(crates);
     String::from("42")
 }
