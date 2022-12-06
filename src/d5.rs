@@ -1,4 +1,8 @@
+use itertools::Itertools;
+
 pub fn day_5() -> anyhow::Result<()> {
+    // Nikolaus brought me this input!!
+    // No, seriously - is it advent of crappy parsing this year?
     let mut one: Vec<String> = vec![
         'N'.to_string(),
         'R'.to_string(),
@@ -69,5 +73,28 @@ pub fn day_5() -> anyhow::Result<()> {
         'G'.to_string(),
         'Z'.to_string(),
     ];
+    let mut crates = vec![one, two, three, four, five, six, seven, eight, nine];
+    let input = std::fs::read_to_string("files/day5.txt").unwrap();
+    let parsed = input.lines().skip(10).collect_vec();
+    let res_one = first_part(crates.to_vec(), parsed);
+
     Ok(())
+}
+
+fn first_part(mut crates: Vec<Vec<String>>, parsed: Vec<&str>) -> String {
+    for line in parsed {
+        let line_split = line.split(' ').collect_vec();
+        let mut times: i32 = line_split[1].parse().unwrap();
+        let from: usize = line_split[3].parse::<usize>().unwrap() - 1; // adjust for tuple indexing
+        let to: usize = line_split[5].parse::<usize>().unwrap() - 1;
+
+        while times > 0 {
+            let crane;
+            crane = crates[from].pop().unwrap();
+            crates[to].push(crane.to_string());
+            times -= 1;
+        }
+    }
+    dbg!(crates);
+    String::from("42")
 }
