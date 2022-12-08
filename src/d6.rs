@@ -17,3 +17,19 @@ fn part_one(parsed: String) -> usize {
         });
     idx.unwrap()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_provided_input() {
+        let input_1 = String::from("bvwbjplbgvbhsrlpgdmjqwftvncz");
+        let input_2 = String::from("nppdvjthqldpwncqszvftbrmjlhg");
+        let input_3 = String::from("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg");
+        let input_4 = String::from("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw");
+        assert_eq!(part_one(input_1), 5 as usize);
+        assert_eq!(part_one(input_2), 6 as usize);
+        assert_eq!(part_one(input_3), 10 as usize);
+        assert_eq!(part_one(input_4), 11 as usize);
+    }
+}
