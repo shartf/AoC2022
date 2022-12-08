@@ -15,7 +15,7 @@ fn part_one(parsed: String) -> usize {
         .position(|(fst, scd, trd, fth)| {
             fst != scd && fst != trd && fst != fth && scd != trd && scd != fth && trd != fth
         });
-    idx.unwrap()
+    idx.unwrap() + 4
 }
 
 #[cfg(test)]
